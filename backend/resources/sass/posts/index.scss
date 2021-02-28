@@ -1,0 +1,190 @@
+.top-wrapper {
+    background-color: #f6f6f6;
+    padding: 40px 0px;
+    overflow: scroll;
+    .detailed-search {
+        float: left;
+        &_form {
+            width: 100%;
+            height: 100%;
+            width: 200px;
+            margin: 0 0 0 102px;
+            box-sizing: border-box;
+            &_head {
+                background-color: #67c606;
+                position: relative;
+                width: 200px;
+                height: 32px;
+                margin: -1px -1px 0 -1px;
+                padding: 2px 10px;
+                line-height: 29px;
+                color: #fff;
+            }
+            &_body {
+                background-color: #fff;
+                .search-conditions {
+                    padding: 10px;
+                    .search-warapper {
+                        padding-top: 10px;
+                        .search-form {
+                            width: 100%;
+                            border-radius: 4px;
+                            background-color: #fff;
+                            height: 32px;
+                            line-height: 56px;
+                            color: #aaa;
+                            box-shadow: inset 0 1px 2px #ccc;
+                            position: relative;
+                            i {
+                                padding: 0 0 0 9px;
+                            }
+                            input {
+                                background-color: none;
+                                font-size: 12px;
+                                border: none;
+                                height: 29px;
+                                outline: 0;
+                                padding: 6px 12px;
+                                width: 155px;
+                            }
+                        }
+                    }
+                    &_title {
+                        font-weight: 700;
+                        font-size: 13px;
+                        padding-bottom: 10px;
+                        &.lgtm-terms_title {
+                            font-weight: bolder;
+                        }
+                    }
+                    &_radio {
+                        font-size: 13px;
+                        label {
+                            margin-left: 20px;
+                            font-size: 12px;
+                        }
+                        input {
+                            display: inline-block;
+                        }
+                        .input-small {
+                            width: 120px;
+                            height: 19px;
+                        }
+                        input[type="date"] {
+                            font-size: 12px;
+                        }
+                        input[type="date"]::-webkit-inner-spin-button {
+                            -webkit-appearance: none;
+                        }
+
+                        input[type="date"]::-webkit-clear-button {
+                            -webkit-appearance: none;
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    .posts-wrapper {
+        float: left;
+        background-color: white;
+        margin: 0 0 0 10px;
+        padding: 20px;
+        .posts-nav {
+            &_ul {
+                border-bottom: 1px solid #ddd;
+                margin-bottom: -1;
+                li {
+                    display: inline-block;
+                    height: 36px;
+                    box-sizing: border-box;
+                    &.active {
+                        border: 1px solid #ddd;
+                        border-bottom: none;
+                        a {
+                            background-color: #fff;
+                            color: #555;
+                        }
+                    }
+                    a {
+                        display: block;
+                        text-decoration: none;
+                        cursor: default;
+                        border-bottom-color: transparent;
+                        margin-right: 2px;
+                        line-height: 1.42857;
+                        border: 1px solid transparent;
+                        border-radius: 3px 3px 0 0;
+                        padding: 8px 15px;
+                        .badge {
+                            display: inline-block;
+                            min-width: 10px;
+                            padding: 3px 7px;
+                            font-size: 12px;
+                            font-weight: 700;
+                            line-height: 1;
+                            color: #fff;
+                            text-align: center;
+                            white-space: nowrap;
+                            vertical-align: middle;
+                            background-color: #999;
+                            border-radius: 10px;
+                        }
+                    }
+                }
+            }
+        }
+        .post-box {
+            display: flex;
+            align-items: center;
+            padding: 20px;
+            border-bottom: solid 3px #f6f6f6;
+            .post-box_left {
+                height: 40px;
+                width: 40px;
+                background-color: gray;
+                border-radius: 5px;
+            }
+            .post-box_right {
+                padding-left: 20px;
+                .post-title {
+                    font-weight: bold;
+                }
+                .post-details {
+                    &_date {
+                        color: gray;
+                        .lgtm {
+                            font-weight: 900;
+                            margin-left: 5px;
+                        }
+                    }
+                }
+                .post-tags {
+                    div {
+                        margin: 0 8px 0 0;
+                    }
+
+                    .post-tag {
+                        background-color: #eee;
+                        display: inline-flex;
+                        padding: 2px 8px;
+                        font-size: 14px;
+                        color: #666;
+                        border-radius: 4px;
+                        height: 23px;
+                        line-height: 19px;
+
+                        border: none;
+                        cursor: pointer;
+                        outline: none;
+                        appearance: none;
+                    }
+                }
+            }
+        }
+        .paginate_wrapper {
+            margin-top: 20px;
+        }
+    }
+}
