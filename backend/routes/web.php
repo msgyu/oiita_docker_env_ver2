@@ -12,7 +12,6 @@
 */
 
 Route::get('/', 'PostController@index')->name('root');
-
 Route::get('posts/my_posts', 'PostController@my_posts')->name('my_posts');
 Route::resource('posts', 'PostController');
 Route::get('likes', 'LikeController@index')->name('likes.index');
