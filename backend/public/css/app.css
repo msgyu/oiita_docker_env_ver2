@@ -17548,17 +17548,17 @@ a.text-dark:focus {
   background-color: #55c501;
 }
 
-#login-wrapper .col-7 {
+#login-wrapper .top-headeing {
   padding-left: 80px;
   padding-top: 100px;
   padding-bottom: 100px;
 }
 
-#login-wrapper .col-7 .top-heading {
+#login-wrapper .top-headeing .top-heading_h1 {
   font-size: 50px;
 }
 
-#login-wrapper .col-7 .top-heading_text {
+#login-wrapper .top-headeing .top-heading_text {
   font-size: 16px;
   font-feature-settings: "pwid";
   line-height: 2;
