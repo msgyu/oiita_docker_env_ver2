@@ -3,9 +3,9 @@
 @section('content')
 @if(!Auth::check())
 <div id="login-wrapper" class="row">
-  <div class="col-sm-7 top-headeing">
-    <h1 class="top-heading_h1 text-white"><b>How developers code is here.</b></h1>
-    <p class="top-heading_text text-white">Oiitaは、エンジニアリングに関する知識を記録・共有するためのサービスです。コードを書いていて気づいたことや、自分がハマったあの仕様について、他のエンジニアと知見を共有しましょう ;)</p>
+  <div class="col-sm-7 top-head">
+    <h1 class="top-head_h1 text-white"><b>How developers code is here.</b></h1>
+    <p class="top-head_text text-white">Oiitaは、エンジニアリングに関する知識を記録・共有するためのサービスです。コードを書いていて気づいたことや、自分がハマったあの仕様について、他のエンジニアと知見を共有しましょう ;)</p>
   </div>
   <div class="col-5 d-none d-md-block">
     <form method="POST" action="{{ route('login') }}">

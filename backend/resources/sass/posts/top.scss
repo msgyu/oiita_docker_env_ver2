@@ -1,13 +1,13 @@
 #login-wrapper {
     background-color: #55c501;
-    .top-headeing {
+    .top-head {
         padding-left: 80px;
         padding-top: 100px;
         padding-bottom: 100px;
-        .top-heading_h1 {
+        &_h1 {
             font-size: 50px;
         }
-        .top-heading_text {
+        &_text {
             font-size: 16px;
             font-feature-settings: "pwid";
             line-height: 2;
