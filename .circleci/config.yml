@@ -7,7 +7,7 @@ jobs:
       - checkout
       - run:
           working_directory: backend
-          command: composer update -n --prefer-dist
+          command: composer install -n --prefer-dist
       - run:
           working_directory: backend
           command: npm ci
