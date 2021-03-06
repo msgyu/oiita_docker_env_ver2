@@ -5,9 +5,7 @@ jobs:
     docker:
       - image: circleci/php:7.4-node-browsers
     steps:
-      # - checkout
-      - restore_cache:
-        key: composer-v2-{{ checksum "backend/composer.lock" }}
+      - checkout
       - run:
           working_directory: backend
           command: composer install -n --prefer-dist
