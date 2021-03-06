@@ -6,9 +6,16 @@ jobs:
     steps:
       - checkout
       - run: sudo composer self-update --1
-      - run: docker-compose exec app composer install -n --prefer-dist
-      - run: docker-compose exec web npm ci
-      - run: docker-compose exec web npm run dev
       - run:
+          working_directory: backend
+          command: composer install -n --prefer-dist
+      - run:
+          working_directory: backend
+          command: npm ci
+      - run:
+          working_directory: backend
+          command: npm run dev
+      - run:
+          working_directory: backend
           name: php test
           command: docker-compose exec app vendor/bin/phpunit
