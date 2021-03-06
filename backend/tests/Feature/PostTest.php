@@ -15,6 +15,8 @@ class PostTest extends TestCase
      *
      * @return void
      */
+
+    // トップ画面の表示をテスト
     public function testtop()
     {
         $response = $this->get('/');
@@ -22,13 +24,14 @@ class PostTest extends TestCase
         $response->assertStatus(200);
     }
 
+    // 投稿一覧が表示されることをテスト
     public function testPostsIndex()
     {
         $response = $this->get('/posts');
-
         $response->assertStatus(200);
     }
 
+    // 投稿の詳細画面が表示されることをテスト
     public function testPostsShow()
     {
         $post = factory(Post::class, 'default')->create();
@@ -38,8 +41,8 @@ class PostTest extends TestCase
 
     public function testPostsCreate__logout()
     {
-        $response = $this->get('/posts/create');
-
+        $post = factory(Post::class, 'default')->create();
+        $response = $this->get(route('posts.show', $post));
         $response->assertStatus(302);
     }
     public function testPostsCreate__login()
