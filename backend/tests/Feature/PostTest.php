@@ -5,6 +5,7 @@ namespace Tests\Feature;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
+use App\Models\Post;
 use App\User;
 
 class PostTest extends TestCase
@@ -30,8 +31,8 @@ class PostTest extends TestCase
 
     public function testPostsShow()
     {
-        $response = $this->get('/posts/10');
-
+        $post = factory(Post::class, 'default')->create();
+        $response = $this->get(route('posts.show', $post));
         $response->assertStatus(200);
     }
 
