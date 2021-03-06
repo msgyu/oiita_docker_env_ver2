@@ -1,15 +1,14 @@
 version: 2.1
 jobs:
   build:
-    working_directory: ../backend
     docker:
       - image: circleci/php:7.3-node-browsers
     steps:
       - checkout
       - run: sudo composer self-update --1
-      - run: composer install -n --prefer-dist
-      - run: npm ci
-      - run: npm run dev
+      - run: docker-compose exec app composer install -n --prefer-dist
+      - run: docker-compose exec web npm ci
+      - run: docker-compose exec web npm run dev
       - run:
           name: php test
-          command: vendor/bin/phpunit
+          command: docker-compose exec app vendor/bin/phpunit
