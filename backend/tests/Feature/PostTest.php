@@ -39,54 +39,39 @@ class PostTest extends TestCase
         $response->assertStatus(200);
     }
 
-    public function testPostsCreate__logout()
-    {
-        $post = factory(Post::class, 'default')->create();
-        $response = $this->get(route('posts.show', $post));
-        $response->assertStatus(302);
-    }
-    public function testPostsCreate__login()
-    {
-        $user = factory(User::class, 'default')->create();
-        $this->actingAs($user);
-        $response = $this->get('/posts/create');
+    // public function testPostsCreate__logout()
+    // {
+    // }
+    // public function testPostsCreate__login()
+    // {
+    // }
 
-        $response->assertStatus(200);
-    }
+    // public function testPostsStore__logout()
+    // {
+    // }
 
-    public function testPostsStore__logout()
-    {
-        $response = $this->post('/posts');
+    // public function testPostsStore__login()
+    // {
+    // }
 
-        $response->assertStatus(302);
-    }
-    public function testPostsStore__login()
-    {
-        $user = factory(User::class, 'default')->create();
-        $this->actingAs($user);
-        $response = $this->post('/posts');
+    // public function testPostsEdite__logout()
+    // {
+    //     $response = $this->get('/posts/10/edit');
 
-        $response->assertStatus(302);
-    }
+    //     $response->assertStatus(302);
+    // }
 
-    public function testPostsEdite__logout()
-    {
-        $response = $this->get('/posts/10/edit');
+    // public function testPostsUpdatee__logout()
+    // {
+    //     $response = $this->put('/posts/10');
 
-        $response->assertStatus(302);
-    }
+    //     $response->assertStatus(302);
+    // }
 
-    public function testPostsUpdatee__logout()
-    {
-        $response = $this->put('/posts/10');
+    // public function testPostsDeletee__logout()
+    // {
+    //     $response = $this->delete('/posts/10');
 
-        $response->assertStatus(302);
-    }
-
-    public function testPostsDeletee__logout()
-    {
-        $response = $this->delete('/posts/10');
-
-        $response->assertStatus(302);
-    }
+    //     $response->assertStatus(302);
+    // }
 }

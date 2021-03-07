@@ -21,24 +21,24 @@ class UserTest extends TestCase
         $this->assertGuest();
     }
 
-    public function testLogin()
-    {
-        $user = factory(User::class)->create([
-            'email' => 'taylor@laravel.com',
-        ]);
+    // public function testLogin()
+    // {
+    //     $user = factory(User::class)->create([
+    //         'email' => 'taylor@laravel.com',
+    //     ]);
 
-        $this->browse(function ($browser) use ($user) {
-            $browser->visit('/login')
-                ->type('email', $user->email)
-                ->type('password', 'password')
-                ->press('Login')
-                ->assertPathIs('/home');
-        });
-    }
+    //     $this->browse(function ($browser) use ($user) {
+    //         $browser->visit('/login')
+    //             ->type('email', $user->email)
+    //             ->type('password', 'password')
+    //             ->press('Login')
+    //             ->assertPathIs('/home');
+    //     });
+    // }
 
-    private function dummyLogin()
-    {
-        $user = factory(User::class, 'default')->create();
-        return $this->actingAs($user);
-    }
+    // private function dummyLogin()
+    // {
+    //     $user = factory(User::class, 'default')->create();
+    //     return $this->actingAs($user);
+    // }
 }
