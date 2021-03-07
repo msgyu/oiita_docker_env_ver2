@@ -10,6 +10,9 @@ jobs:
           command: composer install -n --prefer-dist
       - run:
           working_directory: backend
+          command: php artisan key:generate
+      - run:
+          working_directory: backend
           command: npm ci
       - run:
           working_directory: backend
