@@ -16,10 +16,6 @@ jobs:
             - backend/vendor
       - restore_cache:
           key: npm-v2-{{ checksum "backend/package-lock.json" }}
-
-      - run:
-          working_directory: backend
-          command: php artisan key:generate
       - run:
           working_directory: backend
           name: npm ci
