@@ -38,40 +38,4 @@ class PostTest extends TestCase
         $response = $this->get(route('posts.show', $post));
         $response->assertStatus(200);
     }
-
-    // public function testPostsCreate__logout()
-    // {
-    // }
-    // public function testPostsCreate__login()
-    // {
-    // }
-
-    // public function testPostsStore__logout()
-    // {
-    // }
-
-    // public function testPostsStore__login()
-    // {
-    // }
-
-    // public function testPostsEdite__logout()
-    // {
-    //     $response = $this->get('/posts/10/edit');
-
-    //     $response->assertStatus(302);
-    // }
-
-    // public function testPostsUpdatee__logout()
-    // {
-    //     $response = $this->put('/posts/10');
-
-    //     $response->assertStatus(302);
-    // }
-
-    // public function testPostsDeletee__logout()
-    // {
-    //     $response = $this->delete('/posts/10');
-
-    //     $response->assertStatus(302);
-    // }
 }
