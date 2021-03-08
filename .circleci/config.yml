@@ -2,6 +2,35 @@ version: 2.1
 jobs:
   build:
     docker:
-      - image: circleci/php:7.3-node-browsers
+      - image: circleci/php:8.0.2-node-browsers
     steps:
-      - run: echo "Hello World"
+      - checkout
+      - restore_cache:
+          key: composer-v2-{{ checksum "backend/composer.lock" }}
+      - run:
+          working_directory: backend
+          command: composer install -n --prefer-dist
+      - save_cache:
+          key: composer-v2-{{ checksum "backend/composer.lock" }}
+          paths:
+            - backend/vendor
+      - restore_cache:
+          key: npm-v2-{{ checksum "backend/package-lock.json" }}
+      - run:
+          working_directory: backend
+          name: npm ci
+          command: |
+            if [ ! -d node_modules ]; then
+              npm ci
+            fi
+      - save_cache:
+          key: npm-v2-{{ checksum "backend/package-lock.json" }}
+          paths:
+            - backend/node_modules
+      - run:
+          working_directory: backend
+          command: npm run dev
+      - run:
+          working_directory: backend
+          name: php test
+          command: vendor/bin/phpunit
