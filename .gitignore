@@ -3,3 +3,20 @@
 
 # Docker Compose
 .env
+
+#backend
+./backend/node_modules
+./backend/public/hot
+./backend/public/css
+./backend/public/js
+./backend/public/mix-manifest.json
+./backend/public/storage
+./backend/storage/*.key
+./backend/storage/debugbar
+./backend/vendor
+.env
+.phpunit.result.cache
+Homestead.json
+Homestead.yaml
+npm-debug.log
+yarn-error.log
