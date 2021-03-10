@@ -3,6 +3,8 @@ jobs:
   build:
     docker:
       - image: circleci/php:8.0.2-node-browsers
+        environment:
+          APP_KEY: base64:WIBM5eI11kPy3fwlyTubkHlW+PQyuJXGVuP/F37ZV+I=
     steps:
       - checkout
       - restore_cache:
