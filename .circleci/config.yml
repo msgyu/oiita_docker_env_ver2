@@ -6,12 +6,12 @@ jobs:
         environment:
           APP_KEY: base64:WIBM5eI11kPy3fwlyTubkHlW+PQyuJXGVuP/F37ZV+I=
           APP_ENV: testing
-          DB_HOST: 127.0.0.1
-          DB_CONNECTION: mysql
-          DB_PORT: 3306
-          DB_DATABASE: test_db
-          DB_USERNAME: root
-          DB_PASSWORD: rootpw
+          # DB_HOST: 127.0.0.1
+          # DB_CONNECTION: mysql
+          # DB_PORT: 3306
+          # DB_DATABASE: test_db
+          # DB_USERNAME: root
+          # DB_PASSWORD: rootpw
 
 
       # - image: circleci/mysql:8.0.4
