@@ -10,8 +10,8 @@ jobs:
           DB_CONNECTION: mysql
           DB_PORT: 3306
           DB_DATABASE: test_db
-          DB_USERNAME: user
-          DB_PASSWORD: passw0rd
+          DB_USERNAME: root
+          DB_PASSWORD: rootpw
 
       - image: circleci/mysql:8.0.4
         environment:
