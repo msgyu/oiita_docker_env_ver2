@@ -13,12 +13,13 @@ jobs:
           DB_USERNAME: root
           DB_PASSWORD: rootpw
 
-      - image: circleci/mysql:8.0.4
-        environment:
-          MYSQL_ROOT_PASSWORD: rootpw
-          MYSQL_DATABASE: test_db
-          # MYSQL_USER: user
-          # MYSQL_PASSWORD: passw0rd
+
+      # - image: circleci/mysql:8.0.4
+      #   environment:
+      #     MYSQL_ROOT_PASSWORD: rootpw
+      #     MYSQL_DATABASE: test_db
+      # MYSQL_USER: user
+      # MYSQL_PASSWORD: passw0rd
     steps:
       - checkout
       # - run:
