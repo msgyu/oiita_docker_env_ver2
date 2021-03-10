@@ -21,6 +21,9 @@ jobs:
           MYSQL_PASSWORD: passw0rd
     steps:
       - checkout
+      - run: sudo apt update
+      - run: sudo docker-php-ext-install zip pdo_mysql
+      - run: sudo composer self-update
       - restore_cache:
           key: composer-v2-{{ checksum "backend/composer.lock" }}
       - run:
