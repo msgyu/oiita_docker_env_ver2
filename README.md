@@ -10,7 +10,7 @@ While Qiita allows you to search by keywords, it does not allow you to search by
 <br>
 
 ## URL
-- URL: http://52.192.230.237/
+- URL: http://oiita.site/
 - ユーザー: ゲストログインボタンを押しと簡単にログインできます。
 
 
