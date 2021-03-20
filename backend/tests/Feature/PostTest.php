@@ -15,6 +15,7 @@ class PostTest extends TestCase
      *
      * @return void
      */
+    use RefreshDatabase;
 
     // トップ画面の表示をテスト
     public function testtop()
