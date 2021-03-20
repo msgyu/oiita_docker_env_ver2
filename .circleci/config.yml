@@ -20,7 +20,7 @@ jobs:
       #     MYSQL_DATABASE: test_db
       # MYSQL_USER: user
       # MYSQL_PASSWORD: passw0rd
-    working_directory: backend
+    # working_directory: backend
     steps:
       - checkout
       # - run:
@@ -34,9 +34,7 @@ jobs:
       #     sleep 1
       #   done
       #   echo Failed waiting for MySQL && exit 1
-      - run: sudo apt update
-      - run: sudo docker-php-ext-install zip pdo_mysql
-      - run: sudo composer self-update
+
       - restore_cache:
           key: composer-v2-{{ checksum "backend/composer.lock" }}
       - run:
