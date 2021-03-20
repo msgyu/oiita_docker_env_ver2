@@ -61,9 +61,9 @@ jobs:
       - run:
           working_directory: backend
           command: npm run dev
-      - run:
-          working_directory: backend
-          command: php artisan migrate
+      # - run:
+      #     working_directory: backend
+      #     command: php artisan migrate
       - run:
           working_directory: backend
           name: php test
