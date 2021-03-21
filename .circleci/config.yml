@@ -6,35 +6,8 @@ jobs:
         environment:
           APP_KEY: base64:WIBM5eI11kPy3fwlyTubkHlW+PQyuJXGVuP/F37ZV+I=
           APP_ENV: testing
-          # DB_HOST: 127.0.0.1
-          # DB_CONNECTION: mysql
-          # DB_PORT: 3306
-          # DB_DATABASE: test_db
-          # DB_USERNAME: root
-          # DB_PASSWORD: rootpw
-
-
-      # - image: circleci/mysql:8.0.4
-      #   environment:
-      #     MYSQL_ROOT_PASSWORD: rootpw
-      #     MYSQL_DATABASE: test_db
-      # MYSQL_USER: user
-      # MYSQL_PASSWORD: passw0rd
-    # working_directory: backend
     steps:
       - checkout
-      # - run:
-      # プライマリ コンテナは MySQL ではないため、準備が完了するまで sleep コマンドを実行します。
-      # name: MySQL が準備できるまで待機
-      # command: |
-      #   for i in `seq 1 10`;
-      #   do
-      #     nc -z 127.0.0.1 3306 && echo Success && exit 0
-      #     echo -n .
-      #     sleep 1
-      #   done
-      #   echo Failed waiting for MySQL && exit 1
-
       - restore_cache:
           key: composer-v2-{{ checksum "backend/composer.lock" }}
       - run:
