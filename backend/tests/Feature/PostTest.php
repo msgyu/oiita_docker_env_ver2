@@ -15,6 +15,7 @@ class PostTest extends TestCase
      *
      * @return void
      */
+    use RefreshDatabase;
 
     // トップ画面の表示をテスト
     public function testtop()
@@ -34,6 +35,7 @@ class PostTest extends TestCase
     // 投稿の詳細画面が表示されることをテスト
     public function testPostsShow()
     {
+        $user = factory(User::class, 'default')->create();
         $post = factory(Post::class, 'default')->create();
         $response = $this->get(route('posts.show', $post));
         $response->assertStatus(200);

@@ -14,6 +14,8 @@ class UserTest extends TestCase
      *
      * @return void
      */
+    use RefreshDatabase;
+
     public function testLoginView()
     {
         $response = $this->get('/login');
