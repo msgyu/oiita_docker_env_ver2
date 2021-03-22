@@ -27,15 +27,18 @@ class LikeController extends Controller
         if ($tag_btn_value !== null) {
             $keyword = "#{$tag_btn_value}";
         }
+        if (Auth::check()) {
+            // query
+            $query = Post::withCount('likes')
+                ->join('likes', 'posts.id', '=', 'likes.post_id')
+                ->where('likes.user_id', '=', Auth::id());
+            $posts = DetailedSearch::DetailedSearch($query, $keyword, $request);
+            $all_posts_count = DB::table('posts')->count();
 
-        // query
-        $query = Post::withCount('likes')
-            ->join('likes', 'posts.id', '=', 'likes.post_id')
-            ->where('likes.user_id', '=', Auth::id());
-        $posts = DetailedSearch::DetailedSearch($query, $keyword, $request);
-        $all_posts_count = DB::table('posts')->count();
-
-        return view('likes.index', compact('posts', 'all_posts_count', 'keyword'));
+            return view('likes.index', compact('posts', 'all_posts_count', 'keyword'));
+        } else {
+            redirect()->route('root')->with('flash_message', 'セッション切れです。ログインする必要があります');;
+        }
     }
 
     /**

@@ -45,12 +45,14 @@ class PostController extends Controller
         if ($tag_btn_value !== null) {
             $keyword = "#{$tag_btn_value}";
         }
-
-
-        // query
-        $query = Post::where("posts.user_id", "=", Auth::user()->id)->withCount('likes');
-        $posts = DetailedSearch::DetailedSearch($query, $keyword, $request);
-        return view('posts.my_posts', compact('posts', 'all_posts_count', 'keyword'));
+        if (Auth::check()) {
+            // query
+            $query = Post::where("posts.user_id", "=", Auth::user()->id)->withCount('likes');
+            $posts = DetailedSearch::DetailedSearch($query, $keyword, $request);
+            return view('posts.my_posts', compact('posts', 'all_posts_count', 'keyword'));
+        } else {
+            redirect()->route('root')->with('flash_message', 'セッション切れです。ログインする必要があります');;
+        }
     }
 
     /**
