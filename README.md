@@ -514,6 +514,7 @@ LGTMを取り消したい場合は、再度押すことで取り消すことが�
 ### ログイン
 
 トップページにある、`ログイン`ボタンをクリックするとログイン画面に移行する。
+
 またトップページにはログインフォームが用意されているため、それを利用してログインすることも可能。
 
 ### ログアウト
@@ -523,3 +524,37 @@ LGTMを取り消したい場合は、再度押すことで取り消すことが�
 ![ログアウト](https://user-images.githubusercontent.com/52862370/96535624-2dbeb280-12cd-11eb-8b99-3a4338cb0ec1.png)<br>
 <br>
 <br>
+
+
+# 使用方法
+
+プロジェクトをダウンロード
+
+````
+$git clone
+````
+
+.envファイルの生成
+````
+$ cp .env.example .env
+$ cp ./backend/.env.example .env
+````
+
+dockerの立ち上げ
+````
+$ docker-compose build
+$ docker-compose up -d
+````
+
+composerのインストールとDBの接続
+````
+$ docker-compose exec app bash
+$ composer install
+$ php artisan migrate:fresh --seed
+````
+npmのinstallの実行し、コンパイル
+````
+$ docker-compose exec web sh
+$ npm install
+$ npm run dev
+````
