@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Database\Seeder;
-use App\Models\post;
+use App\Models\Post;
 
 class PostSeeder extends Seeder
 {
@@ -13,7 +13,7 @@ class PostSeeder extends Seeder
     public function run()
     {
         $tags = App\Models\Tag::all();
-        factory(post::class, 200)
+        factory(Post::class, 200)
             ->create()
             ->each(function ($post) use ($tags) {
                 $post->tags()->attach(

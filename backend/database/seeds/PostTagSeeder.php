@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Database\Seeder;
-use App\Models\Post_tag;
+use App\Models\PostTag;
 
 class PostTagSeeder extends Seeder
 {
@@ -12,6 +12,6 @@ class PostTagSeeder extends Seeder
      */
     public function run()
     {
-        factory(Post_tag::class, 200)->create();
+        factory(PostTag::class, 200)->create();
     }
 }

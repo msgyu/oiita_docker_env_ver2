@@ -2,10 +2,10 @@
 
 /** @var \Illuminate\Database\Eloquent\Factory $factory */
 
-use App\Models\like;
+use App\Models\Like;
 use Faker\Generator as Faker;
 
-$factory->define(like::class, function (Faker $faker) {
+$factory->define(Like::class, function (Faker $faker) {
     $postIDs  = App\Models\Post::pluck('id')->all();
     $userIDs  = App\User::pluck('id')->all();
     return [

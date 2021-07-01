@@ -16,7 +16,7 @@ class CreateLikesCountsTable extends Migration
         Schema::create('likes_counts', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->unsignedBigInteger('post_id');
-            $table->foreign('post_id')->references('id')->on('posts');
+            $table->foreign('post_id')->references('id')->on('posts')->cascadeOnDelete();
             $table->integer('likes_count')->default(0);
             $table->timestamps();
         });

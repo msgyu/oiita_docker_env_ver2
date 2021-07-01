@@ -2,25 +2,27 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\like;
-use App\Models\post;
+use App\Models\Like;
+use App\Models\Post;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use App\Services\DetailedSearch;
+use Illuminate\Contracts\Foundation\Application;
+use Illuminate\Contracts\View\Factory;
+use \Illuminate\View\View;
 
 class LikeController extends Controller
 {
     /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
+     * 投稿一覧のトップ画面
+     * @param Request $request
+     * @return Application|Factory|View
      */
-    public function index(Request $request)
+    public function index(Request $request): Application|Factory|View
     {
         // values
         $tag_btn_value = $request->input('tag_btn');
-        $all_posts_count = DB::table('posts')->count();
 
         // keyword
         $keyword = $request->input('search');

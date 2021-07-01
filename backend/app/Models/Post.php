@@ -2,9 +2,10 @@
 
 namespace App\Models;
 
+use App\User;
 use Illuminate\Database\Eloquent\Model;
 
-class post extends Model
+class Post extends Model
 {
     protected $fillable = [
         'title', 'body', 'user_id'
@@ -12,20 +13,20 @@ class post extends Model
 
     public function user()
     {
-        return $this->belongsTo('App\User');
+        return $this->belongsTo(User::class);
     }
     public function tags()
     {
-        return $this->belongsToMany('App\Models\tag', 'post_tags');
+        return $this->belongsToMany(Tag::class, 'post_tags');
     }
 
     public function likes()
     {
-        return $this->hasMany('App\Models\like');
+        return $this->hasMany(Like::class);
     }
 
     public function likes_count()
     {
-        return $this->hasOne('App\Models\likes_count');
+        return $this->hasOne(LikesCount::class);
     }
 }

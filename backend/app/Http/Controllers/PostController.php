@@ -2,19 +2,22 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\post;
-use App\Models\tag;
+use App\Models\Post;
+use App\Models\Tag;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use App\Services\DetailedSearch;
+use Illuminate\Contracts\Foundation\Application;
+use Illuminate\Contracts\View\Factory;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\View\View;
 
 class PostController extends Controller
 {
     /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
+     * @param Request $request
+     * @return Application|Factory|View
      */
     public function index(Request $request)
     {
@@ -54,166 +57,144 @@ class PostController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
+     * @return Application|Factory|\Illuminate\Http\RedirectResponse|View
      */
     public function create()
     {
 
-        if (Auth::check()) {
-            return view('posts.create');
-        } else {
+        if (!Auth::check()) {
             return back()->with('flash_message', '投稿するにはログインする必要があります');
         }
+        return view('posts.create');
     }
 
     /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @param Request $request
+     * @return RedirectResponse
      */
     public function store(Request $request)
     {
 
-        if (Auth::check()) {
-            $params = $request->validate([
-                'title' => 'required|max:255',
-                'body' => 'required|string',
-            ]);
-
-            $params['user_id'] = Auth::id();
-            $post = Post::create($params);
-            $post->likes_count()->create();
-            $tags = $request->tags;
-
-            if (count($tags) !== 0) {
-                foreach ($tags as $tag_params) {
-                    if (!empty($tag_params)) {
-                        $tag = Tag::firstOrCreate(['name' => $tag_params]);
-                        $post->tags()->attach($tag);
-                    }
-                };
-            }
-
-            return redirect()->route('posts.show', compact('post'))->with('flash_message', '投稿しました');
-        } else {
+        if (!Auth::check()) {
             return back()->with('flash_message', '投稿するにはログインする必要があります');
         }
+        $params = $request->validate([
+            'title' => 'required|max:255',
+            'body' => 'required|string',
+        ]);
+
+        $params['user_id'] = Auth::id();
+        $post = Post::create($params);
+        $post->likes_count()->create();
+        $tags = $request->tags;
+
+        if (count($tags) !== 0) {
+            foreach ($tags as $tag_params) {
+                if (!empty($tag_params)) {
+                    $tag = Tag::firstOrCreate(['name' => $tag_params]);
+                    $post->tags()->attach($tag);
+                }
+            };
+        }
+        return redirect()->route('posts.show', compact('post'))->with('flash_message', '投稿しました');
     }
 
     /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\post  $post
-     * @return \Illuminate\Http\Response
+     * @param $id
+     * @return Application|Factory|View
      */
     public function show($id)
     {
         $post = Post::find($id);
-        $user = Auth::user();
-        if (Auth::check()) {
-            $like = DB::table('likes')
-                ->where([
-                    ['post_id', '=', $post->id],
-                    ['user_id', '=', $user->id]
-                ])
-                ->get();
-            return view('posts.show', compact('post', 'like'));
-        } else {
+        if (!Auth::check()) {
             return view('posts.show', compact('post'));
         }
+        $user = Auth::user();
+        $like = DB::table('likes')
+            ->where([
+                ['post_id', '=', $post->id],
+                ['user_id', '=', $user->id]
+            ])
+            ->get();
+        return view('posts.show', compact('post', 'like'));
     }
 
     /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\post  $post
-     * @return \Illuminate\Http\Response
+     * @param $id
+     * @return Application|Factory|RedirectResponse|View
      */
     public function edit($id)
     {
-        if (Auth::check()) {
-            $user = Auth::user();
-            $post = Post::find($id);
-
-            if ($user->id === $post->user_id) {
-                return view('posts.edit', compact('post'));
-            } else {
-                return back()->with('flash_message', '投稿者でなければ編集できません');
-            }
-        } else {
+        if (!Auth::check()) {
             return back()->with('flash_message', '編集するにはログインする必要があります');
         }
+        $user = Auth::user();
+        $post = Post::find($id);
+
+        if ($user->id !== $post->user_id) {
+            return back()->with('flash_message', '投稿者でなければ編集できません');
+        }
+        return view('posts.edit', compact('post'));
     }
 
     /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\post  $post
-     * @return \Illuminate\Http\Response
+     * @param Request $request
+     * @param Post $post
+     * @return RedirectResponse
      */
     public function update(Request $request, post $post)
     {
-
-        if (Auth::check()) {
-            $user = Auth::user();
-
-            if ($user->id === $post->user_id) {
-                $params = $request->validate([
-                    'title' => 'required|max:255',
-                    'body' => 'required|string',
-                ]);
-
-                $post->fill($params)->save();
-                $tags = $request->tags;
-                $post->tags()->detach();
-
-                if (count($tags) !== 0) {
-                    foreach ($tags as $tag_params) {
-                        if (!empty($tag_params)) {
-                            $tag = Tag::firstOrCreate(['name' => $tag_params]);
-                            $post->tags()->attach($tag);
-                        }
-                    };
-                }
-
-
-                return redirect()->route('posts.show', compact('post'))->with('flash_message', '更新しました');
-            } else {
-                return back()->with('flash_message', '投稿者でなければ編集できません');
-            }
-        } else {
+        if (!Auth::check()) {
             return back()->with('flash_message', '編集するにはログインする必要があります');
         }
+        $user = Auth::user();
+
+        if ($user->id !== $post->user_id) {
+            return back()->with('flash_message', '投稿者でなければ編集できません');
+        }
+
+        $params = $request->validate([
+            'title' => 'required|max:255',
+            'body' => 'required|string',
+        ]);
+
+        $post->fill($params)->save();
+        $tags = $request->tags;
+        $post->tags()->detach();
+
+        if (count($tags) !== 0) {
+            foreach ($tags as $tagParams) {
+                if (!empty($tagParams)) {
+                    $tag = Tag::firstOrCreate(['name' => $tagParams]);
+                    $post->tags()->attach($tag);
+                }
+            };
+        }
+
+
+        return redirect()->route('posts.show', compact('post'))->with('flash_message', '更新しました');
     }
 
     /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\post  $post
-     * @return \Illuminate\Http\Response
+     * @param Post $post
+     * @return Application|RedirectResponse|\Illuminate\Routing\Redirector
+     * @throws \Exception
      */
     public function destroy(post $post)
     {
-        if (Auth::check()) {
-            if ($post->exists()) {
-                $user = Auth::user();
-
-                if ($user->id === $post->user_id) {
-
-                    $post->delete();
-                    return redirect(route('root'))->with('flash_message', '削除されました');
-                } else {
-                    return back()->with('flash_message', '投稿者でなければ削除できません');
-                }
-            } else {
-                return redirect(route('root'))->with('flash_message', 'すでに存在しません');
-            }
-        } else {
+        if (!Auth::check()) {
             return back()->with('flash_message', '削除するにはログインする必要があります');
         }
+        if ($post->doesntExist()) {
+            return redirect(route('root'))->with('flash_message', 'すでに存在しません');
+        }
+        $user = Auth::user();
+        if ($user->id !== $post->user_id) {
+            return back()->with('flash_message', '投稿者でなければ削除できません');
+        }
+        $post->tags()->detach();
+        $post->likes_count()->delete();
+        $post->delete();
+        return redirect(route('root'))->with('flash_message', '削除されました');
     }
 }
