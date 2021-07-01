@@ -13,7 +13,7 @@
 
 Route::get('/', 'PostController@index')->name('root');
 
-Route::get('posts/my_posts', 'PostController@my_posts')->name('my_posts');
+Route::get('posts/my_posts', 'PostController@myPosts')->name('my_posts');
 Route::resource('posts', 'PostController');
 Route::get('likes', 'LikeController@index')->name('likes.index');
 Route::post('/like_product', 'LikeController@like_product');

@@ -11,6 +11,11 @@ class Post extends Model
         'title', 'body', 'user_id'
     ];
 
+    protected $dates = [
+        'public_start_at',
+        'public_end_at',
+    ];
+
     public function user()
     {
         return $this->belongsTo(User::class);

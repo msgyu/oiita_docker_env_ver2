@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\PostRequest;
 use App\Models\Post;
 use App\Models\Tag;
 use Illuminate\Http\Request;
@@ -37,7 +38,7 @@ class PostController extends Controller
         return view('posts.index', compact('posts', 'all_posts_count', 'keyword'));
     }
 
-    public function my_posts(Request $request)
+    public function myPosts(Request $request)
     {
         // values
         $tag_btn_value = $request->input('tag_btn');
@@ -72,30 +73,32 @@ class PostController extends Controller
      * @param Request $request
      * @return RedirectResponse
      */
-    public function store(Request $request)
+    public function store(PostRequest $request): RedirectResponse
     {
 
         if (!Auth::check()) {
             return back()->with('flash_message', '投稿するにはログインする必要があります');
         }
-        $params = $request->validate([
-            'title' => 'required|max:255',
-            'body' => 'required|string',
-        ]);
 
-        $params['user_id'] = Auth::id();
-        $post = Post::create($params);
-        $post->likes_count()->create();
-        $tags = $request->tags;
+        $post = DB::transaction(function () use ($request) {
+            $post = Post::create([
+                        'title' => $request->input('title'),
+                        'body'  => $request->input('body'),
+                        'user_id' => Auth::id(),
+                    ]);
+            $post->likes_count()->create();
+            $tags = $request->input('tags');
 
-        if (count($tags) !== 0) {
-            foreach ($tags as $tag_params) {
-                if (!empty($tag_params)) {
-                    $tag = Tag::firstOrCreate(['name' => $tag_params]);
-                    $post->tags()->attach($tag);
+            if (count($tags) !== 0) {
+                foreach ($tags as $tag_params) {
+                    if (!empty($tag_params)) {
+                        $tag = Tag::firstOrCreate(['name' => $tag_params]);
+                        $post->tags()->attach($tag);
+                    }
                 }
-            };
-        }
+            }
+            return $post;
+        });
         return redirect()->route('posts.show', compact('post'))->with('flash_message', '投稿しました');
     }
 
