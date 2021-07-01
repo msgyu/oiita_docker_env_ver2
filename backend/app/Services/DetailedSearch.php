@@ -19,7 +19,7 @@ class DetailedSearch
     $request->session()->put('lgtm-min', $request->input('lgtm-min'));
     $request->session()->put('lgtm-max', $request->input('lgtm-max'));
     $request->session()->put('period', $request->input('period'));
-    if ($request->input('period') == "period") {
+    if ($request->input('period') === "period") {
       $request->session()->put('period-start', $request->input('period-start'));
       $request->session()->put('period-end', $request->input('period-end'));
     } else {
@@ -60,12 +60,15 @@ class DetailedSearch
         case "day":
           $query->where('posts.created_at', '>=', date("Y-m-d 00:00:00"));
           $query->where('posts.created_at', '<=', date("Y-m-d H:i:s"));
+          break;
         case "week":
           $query->where('posts.created_at', '>=', date("Y-m-d 00:00:00", strtotime("-1 week")));
           $query->where('posts.created_at', '<=', date("Y-m-d H:i:s"));
+          break;
         case "month":
           $query->where('posts.created_at', '>=', date("Y-m-d 00:00:00", strtotime("-1 month")));
           $query->where('posts.created_at', '<=', date("Y-m-d H:i:s"));
+          break;
         case "period":
           if ($period_start !== null) {
             $query->where('posts.created_at', '>=', date("{$period_start} 00:00:00"));
@@ -73,6 +76,7 @@ class DetailedSearch
           if ($period_end !== null) {
             $query->where('posts.created_at', '<=', date("{$period_end} 23:59:59"));
           }
+          break;
       }
     }
 
@@ -99,14 +103,12 @@ class DetailedSearch
     }
 
     // search order
-    if ($order == 'new') {
+    if ($order === 'new') {
       $query->orderBy('posts.created_at', 'desc');
     } else {
       $query->orderBy('likes_count', 'desc');
     }
 
-    // 配列を取得
-    $posts = $query->paginate(20);
-    return $posts;
+    return $query->paginate(20);
   }
 }
