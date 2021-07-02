@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\PostRequest;
 use App\Models\Post;
 use App\Models\Tag;
+use App\Services\Post\PostServiceConstruct;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -16,6 +17,12 @@ use Illuminate\View\View;
 
 class PostController extends Controller
 {
+    private PostServiceConstruct $postService;
+
+    public function __construct(PostServiceConstruct $postService)
+    {
+        $this->postService = $postService;
+    }
     /**
      * @param Request $request
      * @return Application|Factory|View
@@ -38,7 +45,11 @@ class PostController extends Controller
         return view('posts.index', compact('posts', 'all_posts_count', 'keyword'));
     }
 
-    public function myPosts(Request $request)
+    /**
+     * @param Request $request
+     * @return Application|Factory|View
+     */
+    public function myPosts(Request $request): Application|Factory|View
     {
         // values
         $tag_btn_value = $request->input('tag_btn');
@@ -81,23 +92,7 @@ class PostController extends Controller
         }
 
         $post = DB::transaction(function () use ($request) {
-            $post = Post::create([
-                        'title' => $request->input('title'),
-                        'body'  => $request->input('body'),
-                        'user_id' => Auth::id(),
-                    ]);
-            $post->likes_count()->create();
-            $tags = $request->input('tags');
-
-            if (count($tags) !== 0) {
-                foreach ($tags as $tag_params) {
-                    if (!empty($tag_params)) {
-                        $tag = Tag::firstOrCreate(['name' => $tag_params]);
-                        $post->tags()->attach($tag);
-                    }
-                }
-            }
-            return $post;
+            return $this->postService->storePost($request);
         });
         return redirect()->route('posts.show', compact('post'))->with('flash_message', '投稿しました');
     }
