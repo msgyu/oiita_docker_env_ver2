@@ -11,7 +11,7 @@
 |
 */
 
-Route::get('/', 'PostController@index')->name('root');
+Route::get('/', 'PostController@index')->name('posts.index');
 
 
 Route::post('/like_product', 'LikeController@like_product')->middleware('auth');

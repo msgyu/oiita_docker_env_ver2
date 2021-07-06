@@ -2,7 +2,7 @@
   <div class="header-container">
     <ul class="header-left">
       <li>
-        <a class="header-icon" href="{{ route('root') }}">
+        <a class="header-icon" href="{{ route('posts.index') }}">
           {{ config('app.name', 'Laravel') }}
         </a>
       </li>

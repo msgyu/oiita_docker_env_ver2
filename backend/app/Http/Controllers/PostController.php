@@ -184,7 +184,7 @@ class PostController extends Controller
             return back()->with('flash_message', '削除するにはログインする必要があります');
         }
         if ($post->doesntExist()) {
-            return redirect(route('root'))->with('flash_message', 'すでに存在しません');
+            return redirect(route('posts.index'))->with('flash_message', 'すでに存在しません');
         }
         $user = Auth::user();
         if ($user->id !== $post->user_id) {
@@ -193,6 +193,6 @@ class PostController extends Controller
         $post->tags()->detach();
         $post->likes_count()->delete();
         $post->delete();
-        return redirect(route('root'))->with('flash_message', '削除されました');
+        return redirect(route('posts.index'))->with('flash_message', '削除されました');
     }
 }

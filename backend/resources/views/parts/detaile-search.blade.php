@@ -8,7 +8,7 @@
       @break
 
       @default
-      <form action="{{ route('root')}}" method="GET" name="detailed-search_form" class="detailed-search_form">
+      <form action="{{ route('posts.index')}}" method="GET" name="detailed-search_form" class="detailed-search_form">
         @endswitch
 
         <div class="detailed-search_form_head">記事の条件</div>

@@ -480,7 +480,7 @@ header にある「投稿する」ボタンをクリックすると、記事の�
                     return back()->with('flash_message', '投稿者でなければ削除できません');
                 }
             } else {
-                return redirect(route('root'))->with('flash_message', 'すでに存在しません');
+                return redirect(route('posts.index'))->with('flash_message', 'すでに存在しません');
             }
 ```
 
