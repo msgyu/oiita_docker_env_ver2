@@ -41,6 +41,9 @@ class PostPolicy
      */
     public function update(Post $post)
     {
+        if(!Auth::check()) {
+            return false;
+        }
         return Auth::id() === $post->user_id;
     }
 

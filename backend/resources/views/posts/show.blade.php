@@ -9,9 +9,8 @@
         <li class="user-name">{{ $post->user->name }}</li>
         <li class="date">{{ $post->created_at }}</li>
       </ul>
+      @can('update_post')
       <ul class="post-header_ul-right">
-        @if (Auth::check())
-        @if($post->user_id === Auth::user()->id)
         <li>
           <a href="{{ route('posts.edit', $post->id) }}" class="edit-pass">
             <span>
@@ -38,9 +37,8 @@
             </div>
           </div>
         </li>
-        @endif
-        @endif
       </ul>
+      @endcan
     </div>
     <div class="post-title"> {{ $post->title }}</div>
     @if($post->tags)

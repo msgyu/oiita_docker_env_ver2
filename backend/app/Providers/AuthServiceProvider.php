@@ -27,6 +27,6 @@ class AuthServiceProvider extends ServiceProvider
     {
         $this->registerPolicies();
 
-        Gate::define('update-post', PostPolicy::class . '@update');
+        Gate::define('update_post', PostPolicy::class . '@update');
     }
 }
